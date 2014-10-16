@@ -1,4 +1,4 @@
-#include <Wire.h>
+#include "Wire.h"
 #include "DHT.h"
 #define SLAVE_ADDRESS 0x04 //Addresse sur bus i2c
 #define DHTPIN 10          // what pin DTH22 is connected to
@@ -13,6 +13,10 @@ int data[4];
 #include <SoftwareSerial.h>
 const byte ENABLE_PIN = 4;
 SoftwareSerial rs485 (2, 3);  // receive pin, transmit pin
+byte received = 0;
+byte buf [10];
+DHT dht(DHTPIN, DHTTYPE);
+
 // callback routines
 void fWrite (const byte what)
   {
@@ -26,10 +30,22 @@ int fRead ()
   {
   return rs485.read ();  
   }
-byte received = 0;
-byte buf [10];
-
-DHT dht(DHTPIN, DHTTYPE);
+void get_temp_DTH22(){
+  // Reading temperature or humidity takes about 250 milliseconds!
+  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
+  Serial.println("In get_temp_DTH22");  
+  int trial=1;
+  float hr = dht.readHumidity();
+  float tt = dht.readTemperature();
+  while(isnan(tt) || isnan(hr) || trial < 10){
+    float hr = dht.readHumidity();
+    float tt = dht.readTemperature();
+    trial++;
+  }
+  tt=tt;
+  data[0]=round(tt);
+  data[1]=round(hr);
+}
 
 void setup(){
   Serial.begin(9600);
@@ -110,18 +126,3 @@ void loop(){
   delay(60000);
 }
 
-void get_temp_DTH22(){
-  // Reading temperature or humidity takes about 250 milliseconds!
-  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
-  int trial=1;
-  float hr = dht.readHumidity();
-  float tt = dht.readTemperature();
-  while(isnan(tt) || isnan(hr) || trial < 10){
-    float hr = dht.readHumidity();
-    float tt = dht.readTemperature();
-    trial++;
-  }
-  tt=tt;
-  data[0]=round(tt);
-  data[1]=round(hr);
-}
