@@ -12,6 +12,7 @@ const byte slave = 1;
 #define LED_GREEN 7
 #define LED_BLUE  8
 #define LED_MESSAGE_FROM_MASTER 9
+#define DEBUG 1
 DHT dht(DHTPIN, DHTTYPE);
 // Connect pin 1 (on the left) of the sensor to +5V
 // Connect pin 2 of the sensor to whatever your DHTPIN is
@@ -65,13 +66,11 @@ void setup()
 
 void loop()
 {
-   
-  // Wait a few seconds between measurements.
-  //delay(2000);
- 
+
   Serial.print("This is slave ");
   Serial.println(slave);
   
+  //Read sensor every 10 cycle
   if (count == 10){count=0;}
   trial=0;
   reading_ok = 0;
@@ -157,7 +156,10 @@ void loop()
     digitalWrite (ENABLE_PIN, LOW);  // disable sending
     digitalWrite(LED_MESSAGE_FROM_MASTER, LOW);
    }  // end if something received
-   // To debug put delay (10000);
+   if(DEBUG){
+       delay (1000);
+   }else{
+       delay (10000);
+   }
    count++;
-   delay (1000);
 }  // end of loop

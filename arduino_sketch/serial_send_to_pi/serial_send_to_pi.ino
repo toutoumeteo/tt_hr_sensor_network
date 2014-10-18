@@ -6,6 +6,7 @@
 #define LED_RED   6
 #define LED_GREEN 7
 #define LED_BLUE  8
+#define DEBUG 1
 int data[4];
 
 // Pour rs485 
@@ -33,7 +34,7 @@ int fRead ()
 void get_temp_DTH22(){
   // Reading temperature or humidity takes about 250 milliseconds!
   // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
-  Serial.println("In get_temp_DTH22");  
+  if(DEBUG){Serial.println("In get_temp_DTH22");}
   int trial=1;
   float hr = dht.readHumidity();
   float tt = dht.readTemperature();
@@ -115,14 +116,17 @@ void loop(){
     data[slave*2]  =buf[3];
     data[slave*2+1]=buf[2];
     
-    delay(10000);
+    delay(1000);
 
   }
   Serial.println("DEBUT MESSAGE");
   Serial.println("Coin SE : temperature "+String(data[0])+" C, humidite "+String(data[1])+"%");
   Serial.println("Coin SO : temperature "+String(data[2])+" C, humidite "+String(data[3])+"%");
   Serial.println("FIN MESSAGE");
-  // To debug put  delay(10000);
-  delay(60000);
+  if(DEBUG){
+     delay(1000);
+  }else{
+     delay(60000);
+  }
 }
 
