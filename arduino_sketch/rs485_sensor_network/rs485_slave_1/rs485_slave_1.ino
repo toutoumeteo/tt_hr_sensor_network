@@ -6,7 +6,7 @@ const byte slave = 1;
 // DHT22 stuff
 //------------
 #include "DHT.h"
-#define DHTPIN 5     // what pin we're connected to
+#define DHTPIN 10     // what pin we're connected to
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
 #define LED_RED   6
 #define LED_GREEN 7
@@ -159,5 +159,5 @@ void loop()
    }  // end if something received
    // To debug put delay (10000);
    count++;
-   delay (10000);
+   delay (1000);
 }  // end of loop
