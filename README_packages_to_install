@@ -1,0 +1,44 @@
+
+#============
+# Create user
+#------------
+
+# We will not work in user pi since it may be hacked since it is a commun user name
+# However to create a new user we need the pi user 
+
+# Chose a Linux user name
+NEW_USER=plante
+
+#login in as user pi and upgrade the system
+sudo apt-get update
+sudo apt-get upgrade
+
+# Add a user ${NEW_USER}
+sudo adduser ${NEW_USER}
+# Add ${NEW_USER} as sudo user
+sudo addsudo ${NEW_USER} sudo
+
+# exit and login in new user
+# Delete pi user
+sudo userdel pi
+sudo rm -rf /home/pi
+
+#==========
+# git stuff
+#----------
+
+git config --global user.name "Andre Plante"
+git config --global user.email adjplante@gmail.com
+git config --global core.editor emacs
+git config --global color.ui true
+
+#=============
+# emacs editor
+#-------------
+sudo apt-get install emacs
+
+#========================================
+# To program arduino uno from comman line
+#----------------------------------------
+sudo apt-get install arduino-core arduino-mk
+sudo usermod -a -G dialout ${NEW_USER}
