@@ -1,3 +1,4 @@
-*/10 * * * * sudo chown plante: /dev/ttyACM0; /usr/bin/python /home/plante/tt_hr_sensor_network/python/serial_read_from_arduino.py
+*/10 * * * * /usr/bin/python /home/plante/tt_hr_sensor_network/python/serial_read_from_arduino.py
 
-# To debug add > /home/plante/log.txt 2>&1
+# To debug add the following at the end
+#      > /home/plante/log.txt 2>&1
