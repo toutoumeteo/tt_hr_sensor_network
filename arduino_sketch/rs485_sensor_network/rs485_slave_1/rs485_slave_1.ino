@@ -6,12 +6,12 @@ const byte slave = 1;
 // DHT22 stuff
 //------------
 #include "DHT.h"
-#define DHTPIN 10     // what pin we're connected to
+#define DHTPIN 11       // what pin DHT22 is connected to
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
-#define LED_RED   6
-#define LED_GREEN 7
-#define LED_BLUE  8
-#define LED_MESSAGE_FROM_MASTER 9
+#define LED_RED   5
+#define LED_GREEN 6
+#define LED_BLUE  7
+#define LED_MESSAGE_FROM_MASTER 8
 #define DEBUG 1
 DHT dht(DHTPIN, DHTTYPE);
 // Connect pin 1 (on the left) of the sensor to +5V
@@ -91,10 +91,6 @@ void loop()
     trial++;
     Serial.print("DHT 22 reading trial ");
     Serial.println(trial);
-    // Reading temperature or humidity takes about 250 milliseconds!
-    // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
-    // Note from Toutou: RGB LED with commun anode is control by reverse LOW HIGH state
-    // Turn off RGE LED
     // Trun off master message led
     digitalWrite(LED_MESSAGE_FROM_MASTER, LOW); 
     led_rgb_common_anode("blue");
@@ -102,7 +98,6 @@ void loop()
     hr = dht.readHumidity();
     Serial.println("Read DHT sensor TT");
     tt = dht.readTemperature();
-
     // check if returns are valid, if they are NaN (not a number) then something went wrong!
     Serial.println("   Check sensor reading");
     if (isnan(tt) || isnan(hr)) {
