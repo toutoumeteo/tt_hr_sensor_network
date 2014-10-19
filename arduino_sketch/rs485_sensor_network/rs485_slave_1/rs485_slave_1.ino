@@ -64,6 +64,19 @@ void setup()
   
 }
 
+void led_rgb_common_anode(String color){
+    digitalWrite(LED_RED, HIGH);
+    digitalWrite(LED_GREEN, HIGH);
+    digitalWrite(LED_BLUE, HIGH);
+    if(color == "red"){
+       digitalWrite(LED_RED, LOW);
+    }else if(color == "green"){
+       digitalWrite(LED_GREEN, LOW);  
+    }else if(color == "blue"){
+       digitalWrite(LED_BLUE, LOW);  
+    }
+}
+
 void loop()
 {
 
@@ -82,13 +95,9 @@ void loop()
     // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
     // Note from Toutou: RGB LED with commun anode is control by reverse LOW HIGH state
     // Turn off RGE LED
-    digitalWrite(LED_RED, HIGH);
-    digitalWrite(LED_GREEN, HIGH);
-    digitalWrite(LED_BLUE, HIGH);
     // Trun off master message led
-    digitalWrite(LED_MESSAGE_FROM_MASTER, LOW);
-  
-    digitalWrite(LED_BLUE, LOW);
+    digitalWrite(LED_MESSAGE_FROM_MASTER, LOW); 
+    led_rgb_common_anode("blue");
     Serial.println("Read DHT sensor HR");
     hr = dht.readHumidity();
     Serial.println("Read DHT sensor TT");
@@ -101,10 +110,7 @@ void loop()
       hr=255;
       tt=255-128;
       reading_ok=0;
-      digitalWrite(LED_RED, HIGH);
-      digitalWrite(LED_GREEN, HIGH);
-      digitalWrite(LED_BLUE, HIGH);
-      digitalWrite(LED_RED, LOW);
+      led_rgb_common_anode("red");
     } else {
       reading_ok=1;
       nb=nb+1;
@@ -119,10 +125,7 @@ void loop()
       Serial.print("Temperature: "); 
       Serial.print(tt);
       Serial.println(" *C");
-      digitalWrite(LED_RED, HIGH);
-      digitalWrite(LED_GREEN, HIGH);
-      digitalWrite(LED_BLUE, HIGH);
-      digitalWrite(LED_GREEN, LOW);
+      led_rgb_common_anode("green");
     }
   }
   

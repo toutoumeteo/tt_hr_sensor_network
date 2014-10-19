@@ -31,6 +31,7 @@ int fRead ()
   {
   return rs485.read ();  
   }
+
 void get_temp_DTH22(){
   // Reading temperature or humidity takes about 250 milliseconds!
   // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
@@ -46,6 +47,19 @@ void get_temp_DTH22(){
   tt=tt;
   data[0]=round(tt);
   data[1]=round(hr);
+}
+
+void led_rgb_common_anode(String color){
+    digitalWrite(LED_RED, HIGH);
+    digitalWrite(LED_GREEN, HIGH);
+    digitalWrite(LED_BLUE, HIGH);
+    if(color == "red"){
+       digitalWrite(LED_RED, LOW);
+    }else if(color == "green"){
+       digitalWrite(LED_GREEN, LOW);  
+    }else if(color == "blue"){
+       digitalWrite(LED_BLUE, LOW);  
+    }
 }
 
 void setup(){
@@ -69,12 +83,8 @@ void loop(){
       1,     // get data
     };
     // send to slave
-    // Note from Toutou: RGB LED with commun anode is control by reverse LOW HIGH state
-    // Turn off RGE LED
-    digitalWrite(LED_RED, HIGH);
-    digitalWrite(LED_GREEN, HIGH);
-    digitalWrite(LED_BLUE, HIGH);
-    digitalWrite(LED_BLUE, LOW);
+    // Note from Toutou: RGB LED with common anode is control by reverse LOW HIGH state
+    led_rgb_common_anode("blue");
     digitalWrite (ENABLE_PIN, HIGH);  // enable sending
     sendMsg (fWrite, msg, sizeof msg);
     digitalWrite (ENABLE_PIN, LOW);  // disable sending
@@ -87,31 +97,19 @@ void loop(){
        trial=trial+1;
        Serial.print("trial ");
        Serial.println(trial);
-       digitalWrite(LED_RED, HIGH);
-       digitalWrite(LED_GREEN, HIGH);
-       digitalWrite(LED_BLUE, HIGH);
-       digitalWrite(LED_BLUE, LOW);
+       led_rgb_common_anode("blue");
        received = recvMsg (fAvailable, fRead, buf, sizeof buf);
        delay(1000);
     }
     if(received != 0){
       if(buf[3] != 255){
          buf[3]=buf[3]-128;
-         digitalWrite(LED_RED, HIGH);
-         digitalWrite(LED_GREEN, HIGH);
-         digitalWrite(LED_BLUE, HIGH);
-         digitalWrite(LED_GREEN, LOW);
+	 led_rgb_common_anode("green");
       }else{
-         digitalWrite(LED_RED, HIGH);
-         digitalWrite(LED_GREEN, HIGH);
-         digitalWrite(LED_BLUE, HIGH);
-         digitalWrite(LED_RED, LOW);
+	 led_rgb_common_anode("red");
       }
     } else {
-       digitalWrite(LED_RED, HIGH);
-       digitalWrite(LED_GREEN, HIGH);
-       digitalWrite(LED_BLUE, HIGH);
-       digitalWrite(LED_RED, LOW);
+       led_rgb_common_anode("red");
     }
     data[slave*2]  =buf[3];
     data[slave*2+1]=buf[2];

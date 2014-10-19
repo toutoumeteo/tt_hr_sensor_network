@@ -1,5 +1,8 @@
-# Use this along with arduino skech :
-# ../arduino_sketch/serial_send_to_pi/serial_send_to_pi.ino
+# Use this to see the serial print from any arduino connected to USB
+# NOTE : to make upload, this must not be running, otherwise an error
+#        similar to the following will be happen:
+#        /usr/share/arduino/Arduino.mk:496: recipe for target 'raw_upload' failed
+#        make: *** [raw_upload] Error 1
 
 import serial
 import datetime
@@ -20,4 +23,3 @@ while lire:
    x = ser.readline()
    print x
 #
-
