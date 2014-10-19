@@ -37,29 +37,6 @@ int fRead ()
   return rs485.read ();  
   }
 
-void get_temp_DTH22(){
-  // Reading temperature or humidity takes about 250 milliseconds!
-  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
-  if(DEBUG){Serial.println("In get_temp_DTH22");}
-  int trial=1;
-  sensor_led_rgb_common_anode("blue");   
-  float hr = dht.readHumidity();
-  float tt = dht.readTemperature();
-  while(isnan(tt) || isnan(hr) || trial < 10){
-    float hr = dht.readHumidity();
-    float tt = dht.readTemperature();
-    trial++;
-  }
-  if(isnan(tt) || isnan(hr)){
-     sensor_led_rgb_common_anode("red");
-  }else{
-     sensor_led_rgb_common_anode("green");  
-  }   
-  tt=tt;
-  data[0]=round(tt);
-  data[1]=round(hr);
-}
-
 void sensor_led_rgb_common_anode(String color){
     digitalWrite(SENSOR_LED_RED, HIGH);
     digitalWrite(SENSOR_LED_GREEN, HIGH);
@@ -84,6 +61,29 @@ void rs485_led_rgb_common_anode(String color){
     }else if(color == "blue"){
        digitalWrite(RS485_LED_BLUE, LOW);  
     }
+}
+
+void get_temp_DTH22(){
+  // Reading temperature or humidity takes about 250 milliseconds!
+  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
+  if(DEBUG){Serial.println("In get_temp_DTH22");}
+  int trial=1;
+  sensor_led_rgb_common_anode("blue");   
+  float hr = dht.readHumidity();
+  float tt = dht.readTemperature();
+  while(isnan(tt) || isnan(hr) || trial < 10){
+    float hr = dht.readHumidity();
+    float tt = dht.readTemperature();
+    trial++;
+  }
+  if(isnan(tt) || isnan(hr)){
+     sensor_led_rgb_common_anode("red");
+  }else{
+     sensor_led_rgb_common_anode("green");  
+  }   
+  tt=tt;
+  data[0]=round(tt);
+  data[1]=round(hr);
 }
 
 void setup(){
