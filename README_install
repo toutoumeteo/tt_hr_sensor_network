@@ -1,0 +1,12 @@
+
+#sudo mkdir -p /var/www/HenriAngers/
+#sudo chown -r plante: /var/www
+
+# Install root cron
+sudo crontab ~/tt_hr_sensor_network/cron/crontab_root
+# Check installation
+sudo crontab -l
+
+# Install user cron
+sudo crontab ~/tt_hr_sensor_network/cron/crontab_root 
+sudo crontab -l
