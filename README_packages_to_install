@@ -42,7 +42,8 @@ sudo apt-get install emacs
 #----------------------------------------
 sudo apt-get install arduino-core arduino-mk
 sudo usermod -a -G dialout ${NEW_USER}
+sudo apt-get install r-base # To make graphes
+sudo apt-get install imagemagic
 
-#=
 # To see circut in file doc/tt_hr_network_sensor.fzz
 # install fritzing

@@ -1,3 +1,7 @@
 *~
 index.html_[0123456789]*
 \#*\#
+.RData
+.Rhistory
+Rplots.pdf
+job.r
