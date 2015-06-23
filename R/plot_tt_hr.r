@@ -1,5 +1,8 @@
 plot_tt_hr <- function(file='',title=''){
 
+	   print(paste(title,'.png',sep=''))
+
+   png(filename = paste(title,'.png',sep=''),width = 480, height = 300, units = "px", pointsize = 12, bg = "white")
    print(file)
    print(title)
    con <- file(file, "r")
@@ -31,7 +34,10 @@ plot_tt_hr <- function(file='',title=''){
       hr[i]=strtoi(substring(lines[i],ind+29,ind+30))
    }
 
-   plot(xx,tt)
-   #plot(xx,hr)
+   plot(xx,tt,ylim=c(10,30), type = "l", col='blue', ylab = "Temperature", main=title)
+   par(new = TRUE)
+   plot(xx, hr, ylim=c(20,100), type = "l", col='green', axes = FALSE, bty = "n", xlab = "", ylab = "")
+   axis(side=4)
+   mtext("HR", side=4, line=3)
 
 }
