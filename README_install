@@ -2,6 +2,8 @@
 #sudo mkdir -p /var/www/HenriAngers/
 #sudo chown -r plante: /var/www
 
+if [ non = oui ];then
+
 # Install root cron
 sudo crontab ~/tt_hr_sensor_network/cron/crontab_root
 # Check installation
@@ -10,3 +12,13 @@ sudo crontab -l
 # Install user cron
 sudo crontab ~/tt_hr_sensor_network/cron/crontab_root 
 sudo crontab -l
+
+# Install arduino libraries
+cd $HOME/sketchbook/libraries
+git clone https://github.com/adafruit/DHT-sensor-library.git DHT
+cd -
+
+fi
+
+#http://www.gammon.com.au/forum/?id=11428
+cp -r arduino_sketch/libs/RS485_protocol $HOME/sketchbook/libraries

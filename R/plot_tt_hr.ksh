@@ -12,6 +12,4 @@ for file in ${HOME}/data/tt_hr_sensor_network/*${DATE}.txt ; do
 EOF
    R --no-save < job.r
    
-   exit
-   
 done

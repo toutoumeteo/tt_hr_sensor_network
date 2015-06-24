@@ -5,3 +5,5 @@ index.html_[0123456789]*
 .Rhistory
 Rplots.pdf
 job.r
+R/*.png
+.DS_Store
