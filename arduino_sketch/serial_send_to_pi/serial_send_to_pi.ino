@@ -8,7 +8,7 @@
 #define RS485_LED_RED    8
 #define RS485_LED_GREEN  9
 #define RS485_LED_BLUE   10
-#define DHTPIN           11 // what pin DTH22 is connected to
+#define DHTPIN           11 // what pin DHT22 is connected to
 #define DHTTYPE DHT22       // DHT 22  (AM2302)
 #
 #define DEBUG 1
@@ -71,10 +71,10 @@ void rs485_led_rgb_common_anode(String color){
     }
 }
 
-void get_temp_DTH22(){
+void get_temp_DHT22(){
   // Reading temperature or humidity takes about 250 milliseconds!
   // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
-  if(DEBUG){Serial.println("In get_temp_DTH22");}
+  if(DEBUG){Serial.println("In get_temp_DHT22");}
   int trial=1;
   sensor_led_rgb_common_anode("blue");   
   float hr = dht.readHumidity();
@@ -135,8 +135,8 @@ void setup(){
 }
  
 void loop(){
-  //get_temp_DTH22();
-  get_temp_HTU21D();
+  get_temp_DHT22();
+  //get_temp_HTU21D();
   for (int slave = 1; slave <= 1 ; slave++) { 
     // assemble message
     byte msg [] = { 
