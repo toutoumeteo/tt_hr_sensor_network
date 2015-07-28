@@ -80,8 +80,8 @@ void get_temp_DTH22(){
   float hr = dht.readHumidity();
   float tt = dht.readTemperature();
   while(isnan(tt) || isnan(hr) || trial < 10){
-    float hr = dht.readHumidity();
-    float tt = dht.readTemperature();
+    hr = dht.readHumidity();
+    tt = dht.readTemperature();
     trial++;
   }
   if(isnan(tt) || isnan(hr)){
@@ -101,8 +101,8 @@ void get_temp_HTU21D(){
   float hr = htu.readHumidity();
   float tt = htu.readTemperature();
   while(isnan(tt) || isnan(hr) || trial < 10){
-    float hr = dht.readHumidity();
-    float tt = dht.readTemperature();
+    hr = dht.readHumidity();
+    tt = dht.readTemperature();
     trial++;
   }
   if(isnan(tt) || isnan(hr)){
@@ -154,7 +154,7 @@ void loop(){
     buf[3]=255;
     received = 0;
     int trial=0;
-    while(trial < 20 & received ==0){
+    while( (trial < 20) & (received == 0) ){
        trial=trial+1;
        Serial.print("Communication with slave trial ");
        Serial.println(trial);
