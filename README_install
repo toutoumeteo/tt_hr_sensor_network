@@ -17,6 +17,10 @@ make upload
 cd ~/tt_hr_sensor_network/arduino_sketch/serial_send_to_pi
 make upload
 
+#To see the serial monitor do :
+cd ~/tt_hr_sensor_network/python
+python serial_read_from_arduino.py
+
 #sudo mkdir -p /var/www/HenriAngers/
 #sudo chown -r plante: /var/www
 
