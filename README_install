@@ -1,3 +1,21 @@
+#=================
+# Load to arduinos
+#-----------------
+# Install necessary libraries in ~/sketchbook/libraries
+# Add their name to the Makefile in the following directory :
+# Example:
+cd ~/sketchbook/libraries/
+git clone https://github.com/adafruit/Adafruit_HTU21DF_Library.git Adafruit_HTU21DF
+# Add  Adafruit_HTU21DF in line RDUINO_LIBS = in the Makefiles
+
+# Connect Arduino slave 1 to USB
+cd ~/tt_hr_sensor_network/arduino_sketch/rs485_sensor_network/rs485_slave_1
+make upload
+
+# Disconnect Arduino slave 1 and connect Arduino master to USB, this will stay
+# connected for communication with PC/rasberry pie
+cd ~/tt_hr_sensor_network/arduino_sketch/serial_send_to_pi
+make upload
 
 #sudo mkdir -p /var/www/HenriAngers/
 #sudo chown -r plante: /var/www
@@ -10,3 +28,4 @@ sudo crontab -l
 # Install user cron
 sudo crontab ~/tt_hr_sensor_network/cron/crontab_root 
 sudo crontab -l
+
