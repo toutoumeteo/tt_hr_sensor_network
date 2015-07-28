@@ -119,11 +119,11 @@ void setup(){
   Serial.begin(9600);
   // initialize i2c as slave
   Wire.begin(SLAVE_ADDRESS);
-  dht.begin();
-  //if (!htu.begin()) {
-  //  Serial.println("Couldn't find sensor on breakout board HTU21D-F!");
-  //  while (1);
-  //}
+  //dht.begin();
+  if (!htu.begin()) {
+    Serial.println("Couldn't find sensor on breakout board HTU21D-F!");
+    while (1);
+  }
   rs485.begin (28800);
   pinMode (ENABLE_PIN, OUTPUT);  // driver output enable
   pinMode (SENSOR_LED_RED, OUTPUT);
