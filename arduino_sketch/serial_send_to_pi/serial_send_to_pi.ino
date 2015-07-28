@@ -1,5 +1,6 @@
 #include "Wire.h"
 #include "DHT.h"
+#include "Adafruit_HTU21DF.h"
 #define SLAVE_ADDRESS 0x04 //Addresse sur bus i2c
 #define SENSOR_LED_RED   5
 #define SENSOR_LED_GREEN 6
@@ -22,6 +23,13 @@ SoftwareSerial rs485 (2, 3);  // receive pin, transmit pin
 byte received = 0;
 byte buf [10];
 DHT dht(DHTPIN, DHTTYPE);
+
+//HTU21D-F breakout board
+// Connect Vin to 3-5VDC
+// Connect GND to ground
+// Connect SCL to I2C clock pin (A5 on UNO)
+// Connect SDA to I2C data pin (A4 on UNO)
+Adafruit_HTU21DF htu = Adafruit_HTU21DF();
 
 // callback routines
 void fWrite (const byte what)
@@ -72,8 +80,29 @@ void get_temp_DTH22(){
   float hr = dht.readHumidity();
   float tt = dht.readTemperature();
   while(isnan(tt) || isnan(hr) || trial < 10){
-    float hr = dht.readHumidity();
-    float tt = dht.readTemperature();
+    hr = dht.readHumidity();
+    tt = dht.readTemperature();
+    trial++;
+  }
+  if(isnan(tt) || isnan(hr)){
+     sensor_led_rgb_common_anode("red");
+  }else{
+     sensor_led_rgb_common_anode("green");  
+  }   
+  tt=tt;
+  data[0]=round(tt);
+  data[1]=round(hr);
+}
+
+void get_temp_HTU21D(){
+  if(DEBUG){Serial.println("In get_temp_HTU21D");}
+  int trial=1;
+  sensor_led_rgb_common_anode("blue");
+  float hr = htu.readHumidity();
+  float tt = htu.readTemperature();
+  while(isnan(tt) || isnan(hr) || trial < 10){
+    hr = dht.readHumidity();
+    tt = dht.readTemperature();
     trial++;
   }
   if(isnan(tt) || isnan(hr)){
@@ -90,7 +119,11 @@ void setup(){
   Serial.begin(9600);
   // initialize i2c as slave
   Wire.begin(SLAVE_ADDRESS);
-  dht.begin();
+  //dht.begin();
+  if (!htu.begin()) {
+    Serial.println("Couldn't find sensor on breakout board HTU21D-F!");
+    while (1);
+  }
   rs485.begin (28800);
   pinMode (ENABLE_PIN, OUTPUT);  // driver output enable
   pinMode (SENSOR_LED_RED, OUTPUT);
@@ -102,7 +135,8 @@ void setup(){
 }
  
 void loop(){
-  get_temp_DTH22();
+  //get_temp_DTH22();
+  get_temp_HTU21D();
   for (int slave = 1; slave <= 1 ; slave++) { 
     // assemble message
     byte msg [] = { 
@@ -120,9 +154,9 @@ void loop(){
     buf[3]=255;
     received = 0;
     int trial=0;
-    while(trial < 20 & received ==0){
+    while( (trial < 20) & (received == 0) ){
        trial=trial+1;
-       Serial.print("trial ");
+       Serial.print("Communication with slave trial ");
        Serial.println(trial);
        rs485_led_rgb_common_anode("blue");
        received = recvMsg (fAvailable, fRead, buf, sizeof buf);

@@ -26,7 +26,7 @@ else:
    remote="plante@toutoumeteo.homelinux.net"
    log_dir=os.environ['HOME']+'/data/tt_hr_sensor_network'
 
-mois=('janvier','fevrier','mars','avril','mai','juin','jullet','aout','septembre','octobre','novembre','decembre')
+mois=('janvier','fevrier','mars','avril','mai','juin','juillet','aout','septembre','octobre','novembre','decembre')
 jour=('Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche')
 
 print "Opening "+file_name
