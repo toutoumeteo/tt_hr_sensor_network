@@ -145,8 +145,8 @@ void loop(){
 
   }
   Serial.println("DEBUT MESSAGE");
-  Serial.println("Coin SE : temperature "+String(data[0])+" C, humidite "+String(data[1])+"%");
-  Serial.println("Coin SO : temperature "+String(data[2])+" C, humidite "+String(data[3])+"%");
+  Serial.println("Coin SE : temperature "+String(data[0])+" C, humidite "+String(data[1])+" %");
+  Serial.println("Coin SO : temperature "+String(data[2])+" C, humidite "+String(data[3])+" %");
   Serial.println("FIN MESSAGE");
   if(DEBUG){
      delay(1000);
