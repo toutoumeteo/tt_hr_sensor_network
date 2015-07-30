@@ -174,11 +174,15 @@ void loop(){
     int trial=0;
     while( (trial < 5) & (received == 0) ){
        trial=trial+1;
-       Serial.print("Communication with slave trial ");
+       Serial.print("Communication with slave trial ");	
        Serial.println(trial);
        rs485_led_rgb_common_anode("blue");
        received = recvMsg (fAvailable, fRead, buf, sizeof buf);
-       delay(1000);
+       delay(400);
+       if(received == 0){
+          rs485_led_rgb_common_anode("red");
+       }	
+       delay(600);
     }
     if(received != 0){
       if(buf[3] != 255){
