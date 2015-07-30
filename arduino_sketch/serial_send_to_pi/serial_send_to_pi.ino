@@ -97,12 +97,17 @@ void get_temp_DHT22(){
 void get_temp_HTU21D(){
   if(DEBUG){Serial.println("In get_temp_HTU21D");}
   int trial=1;
+  float tt, hr;
   sensor_led_rgb_common_anode("blue");
-  float hr = htu.readHumidity();
-  float tt = htu.readTemperature();
-  while(isnan(tt) || isnan(hr) || trial < 10){
-    hr = htu.readHumidity();
-    tt = htu.readTemperature();
+  hr = htu.readHumidity();
+  tt = htu.readTemperature();
+  Serial.println(tt);
+  Serial.println(hr);
+  while( (isnan(tt) || isnan(hr)) && trial < 10){
+    Serial.print("   HTU21D trial ");
+    Serial.println(trial);
+    hr = dht.readHumidity();
+    tt = dht.readTemperature();
     trial++;
   }
   if(isnan(tt) || isnan(hr)){
@@ -154,7 +159,7 @@ void loop(){
     buf[3]=255;
     received = 0;
     int trial=0;
-    while( (trial < 20) & (received == 0) ){
+    while( (trial < 5) & (received == 0) ){
        trial=trial+1;
        Serial.print("Communication with slave trial ");
        Serial.println(trial);
