@@ -13,6 +13,9 @@
 #
 #define DEBUG 1
 #
+String SENSOR_TYPE = String("DHT22");
+//String SENSOR_TYPE = String("HTU21DF");
+
 int data[4];
 
 // Pour rs485 
@@ -22,6 +25,7 @@ const byte ENABLE_PIN = 4;
 SoftwareSerial rs485 (2, 3);  // receive pin, transmit pin
 byte received = 0;
 byte buf [10];
+
 DHT dht(DHTPIN, DHTTYPE);
 
 //HTU21D-F breakout board
@@ -94,8 +98,8 @@ void get_temp_DHT22(){
   data[1]=round(hr);
 }
 
-void get_temp_HTU21D(){
-  if(DEBUG){Serial.println("In get_temp_HTU21D");}
+void get_temp_HTU21DF(){
+  if(DEBUG){Serial.println("In get_temp_HTU21DF");}
   int trial=1;
   float tt, hr;
   sensor_led_rgb_common_anode("blue");
@@ -104,10 +108,10 @@ void get_temp_HTU21D(){
   Serial.println(tt);
   Serial.println(hr);
   while( (isnan(tt) || isnan(hr)) && trial < 10){
-    Serial.print("   HTU21D trial ");
+    Serial.print("   HTU21DF trial ");
     Serial.println(trial);
-    hr = dht.readHumidity();
-    tt = dht.readTemperature();
+    hr = htu.readHumidity();
+    tt = htu.readTemperature();
     trial++;
   }
   if(isnan(tt) || isnan(hr)){
@@ -124,10 +128,14 @@ void setup(){
   Serial.begin(9600);
   // initialize i2c as slave
   Wire.begin(SLAVE_ADDRESS);
-  //dht.begin();
-  if (!htu.begin()) {
-    Serial.println("Couldn't find sensor on breakout board HTU21D-F!");
-    while (1);
+  if( SENSOR_TYPE.equals("DHT22")){
+     dht.begin();
+  }
+  if( SENSOR_TYPE.equals("HTU21DF")){
+     if (!htu.begin()) {
+        Serial.println("Couldn't find sensor on breakout board HTU21D-F!");
+        while (1);
+     }
   }
   rs485.begin (28800);
   pinMode (ENABLE_PIN, OUTPUT);  // driver output enable
@@ -141,7 +149,7 @@ void setup(){
  
 void loop(){
   get_temp_DHT22();
-  //get_temp_HTU21D();
+  //get_temp_HTU21DF();
   for (int slave = 1; slave <= 1 ; slave++) { 
     // assemble message
     byte msg [] = { 
