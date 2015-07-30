@@ -6,16 +6,16 @@
 #define SENSOR_LED_RED   5
 #define SENSOR_LED_GREEN 6
 #define SENSOR_LED_BLUE  7
-#define RS485_LED_RED    8
-#define RS485_LED_GREEN  9
-#define RS485_LED_BLUE   10
+#define RS485_LED_RED    14
+#define RS485_LED_GREEN  15
+#define RS485_LED_BLUE   16
 #define DHTPIN           11 // what pin DHT22 is connected to
 #define DHTTYPE DHT22       // DHT 22  (AM2302)
 #
 #define DEBUG 1
 #
-String SENSOR_TYPE = String("DHT22");
-//String SENSOR_TYPE = String("HTU21DF");
+//String SENSOR_TYPE = String("DHT22");
+String SENSOR_TYPE = String("HTU21DF");
 
 int data[4];
 
