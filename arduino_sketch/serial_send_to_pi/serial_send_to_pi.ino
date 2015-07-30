@@ -13,8 +13,8 @@
 #
 #define DEBUG 1
 #
-String SENSOR_TYPE = String("DHT22");
-//String SENSOR_TYPE = String("HTU21DF");
+//String SENSOR_TYPE = String("DHT22");
+String SENSOR_TYPE = String("HTU21DF");
 
 int data[4];
 
