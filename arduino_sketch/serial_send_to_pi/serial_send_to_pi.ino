@@ -149,8 +149,12 @@ void setup(){
 }
  
 void loop(){
-  get_temp_DHT22();
-  //get_temp_HTU21DF();
+  if( SENSOR_TYPE.equals("DHT22")){
+     get_temp_DHT22();
+  }
+  if( SENSOR_TYPE.equals("HTU21DF")){
+    get_temp_HTU21DF();
+  }
   for (int slave = 1; slave <= 1 ; slave++) { 
     // assemble message
     byte msg [] = { 
