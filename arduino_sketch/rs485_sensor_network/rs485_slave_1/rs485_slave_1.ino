@@ -6,7 +6,7 @@ const byte slave = 1;
 // DHT22 stuff
 //------------
 #include "DHT.h"
-#define DHTPIN 11       // what pin DHT22 is connected to
+#define DHTPIN 10       // what pin DHT22 is connected to
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
 #define LED_RED   5
 #define LED_GREEN 6
@@ -94,10 +94,12 @@ void loop()
     // Trun off master message led
     digitalWrite(LED_MESSAGE_FROM_MASTER, LOW); 
     led_rgb_common_anode("blue");
-    Serial.println("Read DHT sensor HR");
+    Serial.print("Read DHT sensor HR ");
     hr = dht.readHumidity();
-    Serial.println("Read DHT sensor TT");
+    Serial.println(hr);
+    Serial.print("Read DHT sensor TT ");
     tt = dht.readTemperature();
+    Serial.println(tt);
     // check if returns are valid, if they are NaN (not a number) then something went wrong!
     Serial.println("   Check sensor reading");
     if (isnan(tt) || isnan(hr)) {
@@ -120,7 +122,11 @@ void loop()
       Serial.print("Temperature: "); 
       Serial.print(tt);
       Serial.println(" *C");
-      led_rgb_common_anode("green");
+      if( ( tt == 0 ) && (hr == 0) ){
+         led_rgb_common_anode("red");
+      } else {
+         led_rgb_common_anode("green");
+      }
     }
   }
   
