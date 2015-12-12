@@ -5,7 +5,8 @@
 byte mac[] = {
   0x90, 0xA2, 0xDA, 0x0D, 0xA5, 0x5F
 };
-IPAddress ip(192, 168, 1, 3);
+//IPAddress ip(192, 168, 1, 3);
+IPAddress ip(192, 168, 2, 18);
 // Initialize the Ethernet server library
 // with the IP address and port you want to use
 // (port 80 is default for HTTP):
